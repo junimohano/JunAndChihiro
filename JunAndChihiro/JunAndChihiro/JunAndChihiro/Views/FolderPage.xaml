@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:JunAndChihiro.ViewModels;assembly=JunAndChihiro"
+             x:Class="JunAndChihiro.Views.FolderPage">
+  
+  <TabbedPage.BindingContext>
+    <viewModels:FolderPageViewModel/>
+  </TabbedPage.BindingContext>
+
+  <TabbedPage.Children>
+    <ContentPage Title="Folders" >
+      <ContentPage.BackgroundImage>
+        <OnPlatform x:TypeArguments="x:String" Android="background2.jpg" WinPhone="background2.png" />
+      </ContentPage.BackgroundImage>
+      
+      <StackLayout>
+        <StackLayout.Padding>
+          <OnPlatform x:TypeArguments="Thickness" iOS="0,20,0,0" Android="0,0,0,0" />
+        </StackLayout.Padding>
+
+        <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}" />
+
+        <StackLayout Orientation="Horizontal" Padding="10">
+          <Label Text="Path : " HorizontalOptions="Start" VerticalOptions="Center" HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="20" StyleClass="Inverse"></Label>
+          <Label Text="{Binding CurrentFolderName}" HorizontalOptions="FillAndExpand" VerticalOptions="Center" HorizontalTextAlignment="Start" FontAttributes="Bold" FontSize="20" StyleClass="Inverse"></Label>
+        </StackLayout>
+
+        <ListView x:Name="ListViewFolder" ItemsSource="{Binding Path=FolderList}" IsEnabled="{Binding IsNotBusy}" HeightRequest="30"
+                  HasUnevenRows="True" SelectedItem="{Binding SelectedFolder}">
+          <ListView.ItemTemplate>
+            <DataTemplate>
+              <ViewCell>
+                <StackLayout Orientation="Horizontal" Padding="10">
+                  <Image Source="folder.png" HorizontalOptions="Start"></Image>
+                  <Label Text="{Binding Name}" HorizontalOptions="FillAndExpand" VerticalOptions="Center" HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="30" StyleClass="Inverse"></Label>
+                </StackLayout>
+              </ViewCell>
+            </DataTemplate>
+          </ListView.ItemTemplate>
+        </ListView>
+      </StackLayout>
+    </ContentPage>
+
+    <ContentPage Title="{Binding FileCount, StringFormat='Files ({0})'}" >
+      <StackLayout>
+        <StackLayout.Padding>
+          <OnPlatform x:TypeArguments="Thickness" iOS="0,40,0,0" Android="0,0,0,0" />
+        </StackLayout.Padding>
+
+        <ListView ItemsSource="{Binding FolderPageViewModelList}" SelectedItem="{Binding SelectedFolderPageViewModel}" RowHeight="100" >
+          <ListView.ItemTemplate>
+            <DataTemplate>
+              <ViewCell>
+                <StackLayout VerticalOptions="StartAndExpand" Orientation="Horizontal" Padding="1">
+
+                  <Image HorizontalOptions="Start" VerticalOptions="Center" Aspect="AspectFit"
+                        StyleClass="Thumbnail"
+                        HeightRequest ="100" WidthRequest="100"
+                        Source="{Binding ThumbImage}" />
+
+                  <StackLayout VerticalOptions="Center" Orientation="Vertical" HorizontalOptions="FillAndExpand">
+                    <Label Text="{Binding JFile.Name}" HorizontalTextAlignment="Center" FontSize="20" StyleClass="Inverse" />
+                    <Label Text="{Binding JFile.Description}" HorizontalTextAlignment="Center" FontSize="15" StyleClass="Inverse" />
+                    <Label Text="{Binding JFile.Date, StringFormat='{0:MMMM dd, yyyy}'}" HorizontalTextAlignment="Center" FontSize="15" StyleClass="Inverse"/>
+                  </StackLayout>
+
+                  <Image HorizontalOptions="Start" VerticalOptions="Center" Aspect="AspectFit"
+                        StyleClass="Thumbnail"
+                        HeightRequest ="48" WidthRequest="48"
+                        Source="{Binding FileTypeImage}" />
+
+                </StackLayout>
+              </ViewCell>
+            </DataTemplate>
+          </ListView.ItemTemplate>
+        </ListView>
+
+
+        <!--<ListView ItemsSource="{Binding FolderPageViewModelList}" VerticalOptions="StartAndExpand" SelectedItem="{Binding SelectedFolderPageViewModel}" >
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <ImageCell
+              Text="{Binding JFile.Name}"
+              Detail="{Binding JFile.Description, StringFormat='{0}'}"
+              ImageSource="{Binding ThumbImage}">
+            </ImageCell>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>-->
+      </StackLayout>
+    </ContentPage>
+
+  </TabbedPage.Children>
+</TabbedPage>

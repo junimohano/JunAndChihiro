@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:JunAndChihiro.ViewModels;assembly=JunAndChihiro"
+             x:Class="JunAndChihiro.Views.LoginPage">
+
+  <ContentPage.BackgroundImage>
+    <OnPlatform x:TypeArguments="x:String" Android="background1.jpg" iOS="background1.png" WinPhone="background1.png" />
+  </ContentPage.BackgroundImage>
+  
+  <ContentPage.BindingContext>
+    <viewModels:LoginPageViewModel/>
+  </ContentPage.BindingContext>
+
+  <ScrollView>
+    <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+
+      <StackLayout.Padding>
+        <OnPlatform x:TypeArguments="Thickness" iOS="0,40,0,0" Android="0,20,0,0" />
+      </StackLayout.Padding>
+
+      <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Padding="10" >
+        <Label Text="ID" WidthRequest="50" HorizontalOptions="Start" HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="20" StyleClass="Inverse" ></Label>
+        <Entry Text="{Binding Id}" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="20" ></Entry>
+      </StackLayout>
+
+      <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Padding="10" >
+        <Label Text="PW" WidthRequest="50" HorizontalOptions="Start" HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="20" StyleClass="Inverse"></Label>
+        <Entry Text="{Binding Pw}" IsPassword="True" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="20"></Entry>
+      </StackLayout>
+
+      <Button Command="{Binding LoginCommand}" Text="Login" IsEnabled="{Binding IsNotBusy}" HorizontalOptions="FillAndExpand" StyleClass="Info"></Button>
+
+      <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}" />
+
+    </StackLayout>
+  </ScrollView>
+
+</ContentPage>

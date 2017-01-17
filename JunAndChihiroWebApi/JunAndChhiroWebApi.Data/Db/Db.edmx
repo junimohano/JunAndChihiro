@@ -1,0 +1,670 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="JunAndChihiroModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CoreRelationInfo">
+          <Key>
+            <PropertyRef Name="OidOrigin" />
+            <PropertyRef Name="OidDestination" />
+          </Key>
+          <Property Name="OidOrigin" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="OidDestination" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CoreTableInfo">
+          <Key>
+            <PropertyRef Name="Oid" />
+          </Key>
+          <Property Name="Oid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CreatedOid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedOid" Type="uniqueidentifier" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="File">
+          <Key>
+            <PropertyRef Name="FileOid" />
+          </Key>
+          <Property Name="FileOid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="FileName" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="1000" />
+          <Property Name="Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Folder">
+          <Key>
+            <PropertyRef Name="FolderOid" />
+          </Key>
+          <Property Name="FolderOid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserOid" />
+          </Key>
+          <Property Name="UserOid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Id" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'JunAndChihiro.dbo.JFile' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="JFile">
+          <Key>
+            <PropertyRef Name="FileOid" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="FileName" />
+            <PropertyRef Name="CreatedOid" />
+            <PropertyRef Name="CreatedDate" />
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="FirstName" />
+            <PropertyRef Name="LastName" />
+          </Key>
+          <Property Name="FileOid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="FileName" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="1000" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="CreatedOid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedOid" Type="uniqueidentifier" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="Id" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FolderPath" Type="varchar" MaxLength="1000" />
+          <Property Name="FolderOid" Type="uniqueidentifier" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'JunAndChihiro.dbo.JFolder' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="JFolder">
+          <Key>
+            <PropertyRef Name="FolderOid" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="CreatedOid" />
+            <PropertyRef Name="CreatedDate" />
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="FirstName" />
+            <PropertyRef Name="LastName" />
+          </Key>
+          <Property Name="FolderOid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="CreatedOid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedOid" Type="uniqueidentifier" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="Id" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RootFolderPath" Type="varchar" MaxLength="1000" />
+          <Property Name="RootFolderOid" Type="uniqueidentifier" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'JunAndChihiro.dbo.JTableInfo' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="JTableInfo">
+          <Key>
+            <PropertyRef Name="Oid" />
+            <PropertyRef Name="CreatedOid" />
+            <PropertyRef Name="CreatedDate" />
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="FirstName" />
+            <PropertyRef Name="LastName" />
+          </Key>
+          <Property Name="Oid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CreatedOid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedOid" Type="uniqueidentifier" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="Id" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'JunAndChihiro.dbo.JUser' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="JUser">
+          <Key>
+            <PropertyRef Name="UserOid" />
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Password" />
+            <PropertyRef Name="FirstName" />
+            <PropertyRef Name="LastName" />
+            <PropertyRef Name="CreatedOid" />
+            <PropertyRef Name="CreatedDate" />
+          </Key>
+          <Property Name="UserOid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Id" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedOid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedOid" Type="uniqueidentifier" />
+          <Property Name="UpdatedDate" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'JunAndChihiro.dbo.XFolderHierarchy' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="XFolderHierarchy">
+          <Key>
+            <PropertyRef Name="OidOrigin" />
+            <PropertyRef Name="OidDestination" />
+          </Key>
+          <Property Name="OidOrigin" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="OidDestination" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'JunAndChihiro.dbo.XOwnFile' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="XOwnFile">
+          <Key>
+            <PropertyRef Name="OidOrigin" />
+            <PropertyRef Name="OidDestination" />
+          </Key>
+          <Property Name="OidOrigin" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="OidDestination" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Folder_CoreTableInfo">
+          <End Role="CoreTableInfo" Type="Self.CoreTableInfo" Multiplicity="1" />
+          <End Role="Folder" Type="Self.Folder" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CoreTableInfo">
+              <PropertyRef Name="Oid" />
+            </Principal>
+            <Dependent Role="Folder">
+              <PropertyRef Name="FolderOid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Picture_CoreTableInfo">
+          <End Role="CoreTableInfo" Type="Self.CoreTableInfo" Multiplicity="1" />
+          <End Role="File" Type="Self.File" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CoreTableInfo">
+              <PropertyRef Name="Oid" />
+            </Principal>
+            <Dependent Role="File">
+              <PropertyRef Name="FileOid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_CoreTableInfo">
+          <End Role="CoreTableInfo" Type="Self.CoreTableInfo" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CoreTableInfo">
+              <PropertyRef Name="Oid" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="UserOid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="JunAndChihiroModelStoreContainer">
+          <EntitySet Name="CoreRelationInfo" EntityType="Self.CoreRelationInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CoreTableInfo" EntityType="Self.CoreTableInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="File" EntityType="Self.File" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Folder" EntityType="Self.Folder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="JFile" EntityType="Self.JFile" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [JFile].[FileOid] AS [FileOid], 
+    [JFile].[Name] AS [Name], 
+    [JFile].[FileName] AS [FileName], 
+    [JFile].[Description] AS [Description], 
+    [JFile].[Date] AS [Date], 
+    [JFile].[CreatedOid] AS [CreatedOid], 
+    [JFile].[CreatedDate] AS [CreatedDate], 
+    [JFile].[UpdatedOid] AS [UpdatedOid], 
+    [JFile].[UpdatedDate] AS [UpdatedDate], 
+    [JFile].[Id] AS [Id], 
+    [JFile].[FirstName] AS [FirstName], 
+    [JFile].[LastName] AS [LastName], 
+    [JFile].[FolderPath] AS [FolderPath], 
+    [JFile].[FolderOid] AS [FolderOid]
+    FROM [dbo].[JFile] AS [JFile]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="JFolder" EntityType="Self.JFolder" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [JFolder].[FolderOid] AS [FolderOid], 
+    [JFolder].[Name] AS [Name], 
+    [JFolder].[CreatedOid] AS [CreatedOid], 
+    [JFolder].[CreatedDate] AS [CreatedDate], 
+    [JFolder].[UpdatedOid] AS [UpdatedOid], 
+    [JFolder].[UpdatedDate] AS [UpdatedDate], 
+    [JFolder].[Id] AS [Id], 
+    [JFolder].[FirstName] AS [FirstName], 
+    [JFolder].[LastName] AS [LastName], 
+    [JFolder].[RootFolderPath] AS [RootFolderPath], 
+    [JFolder].[RootFolderOid] AS [RootFolderOid]
+    FROM [dbo].[JFolder] AS [JFolder]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="JTableInfo" EntityType="Self.JTableInfo" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [JTableInfo].[Oid] AS [Oid], 
+    [JTableInfo].[CreatedOid] AS [CreatedOid], 
+    [JTableInfo].[CreatedDate] AS [CreatedDate], 
+    [JTableInfo].[UpdatedOid] AS [UpdatedOid], 
+    [JTableInfo].[UpdatedDate] AS [UpdatedDate], 
+    [JTableInfo].[Id] AS [Id], 
+    [JTableInfo].[FirstName] AS [FirstName], 
+    [JTableInfo].[LastName] AS [LastName]
+    FROM [dbo].[JTableInfo] AS [JTableInfo]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="JUser" EntityType="Self.JUser" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [JUser].[UserOid] AS [UserOid], 
+    [JUser].[Id] AS [Id], 
+    [JUser].[Password] AS [Password], 
+    [JUser].[FirstName] AS [FirstName], 
+    [JUser].[LastName] AS [LastName], 
+    [JUser].[CreatedOid] AS [CreatedOid], 
+    [JUser].[CreatedDate] AS [CreatedDate], 
+    [JUser].[UpdatedOid] AS [UpdatedOid], 
+    [JUser].[UpdatedDate] AS [UpdatedDate]
+    FROM [dbo].[JUser] AS [JUser]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="XFolderHierarchy" EntityType="Self.XFolderHierarchy" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [XFolderHierarchy].[OidOrigin] AS [OidOrigin], 
+    [XFolderHierarchy].[OidDestination] AS [OidDestination]
+    FROM [dbo].[XFolderHierarchy] AS [XFolderHierarchy]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="XOwnFile" EntityType="Self.XOwnFile" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [XOwnFile].[OidOrigin] AS [OidOrigin], 
+    [XOwnFile].[OidDestination] AS [OidDestination]
+    FROM [dbo].[XOwnFile] AS [XOwnFile]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Folder_CoreTableInfo" Association="Self.FK_Folder_CoreTableInfo">
+            <End Role="CoreTableInfo" EntitySet="CoreTableInfo" />
+            <End Role="Folder" EntitySet="Folder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Picture_CoreTableInfo" Association="Self.FK_Picture_CoreTableInfo">
+            <End Role="CoreTableInfo" EntitySet="CoreTableInfo" />
+            <End Role="File" EntitySet="File" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_CoreTableInfo" Association="Self.FK_User_CoreTableInfo">
+            <End Role="CoreTableInfo" EntitySet="CoreTableInfo" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="JunAndChihiroModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="JunAndChihiroEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CoreRelationInfoes" EntityType="JunAndChihiroModel.CoreRelationInfo" />
+          <EntitySet Name="CoreTableInfoes" EntityType="JunAndChihiroModel.CoreTableInfo" />
+          <EntitySet Name="Files" EntityType="JunAndChihiroModel.File" />
+          <EntitySet Name="Folders" EntityType="JunAndChihiroModel.Folder" />
+          <EntitySet Name="Users" EntityType="JunAndChihiroModel.User" />
+          <EntitySet Name="JFiles" EntityType="JunAndChihiroModel.JFile" />
+          <EntitySet Name="JFolders" EntityType="JunAndChihiroModel.JFolder" />
+          <EntitySet Name="JTableInfoes" EntityType="JunAndChihiroModel.JTableInfo" />
+          <EntitySet Name="JUsers" EntityType="JunAndChihiroModel.JUser" />
+          <EntitySet Name="XFolderHierarchies" EntityType="JunAndChihiroModel.XFolderHierarchy" />
+          <EntitySet Name="XOwnFiles" EntityType="JunAndChihiroModel.XOwnFile" />
+          <AssociationSet Name="FK_Folder_CoreTableInfo" Association="JunAndChihiroModel.FK_Folder_CoreTableInfo">
+            <End Role="CoreTableInfo" EntitySet="CoreTableInfoes" />
+            <End Role="Folder" EntitySet="Folders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Picture_CoreTableInfo" Association="JunAndChihiroModel.FK_Picture_CoreTableInfo">
+            <End Role="CoreTableInfo" EntitySet="CoreTableInfoes" />
+            <End Role="File" EntitySet="Files" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_CoreTableInfo" Association="JunAndChihiroModel.FK_User_CoreTableInfo">
+            <End Role="CoreTableInfo" EntitySet="CoreTableInfoes" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="CoreRelationInfo">
+          <Key>
+            <PropertyRef Name="OidOrigin" />
+            <PropertyRef Name="OidDestination" />
+          </Key>
+          <Property Name="OidOrigin" Type="Guid" Nullable="false" />
+          <Property Name="OidDestination" Type="Guid" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CoreTableInfo">
+          <Key>
+            <PropertyRef Name="Oid" />
+          </Key>
+          <Property Name="Oid" Type="Guid" Nullable="false" />
+          <Property Name="CreatedOid" Type="Guid" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedOid" Type="Guid" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Folder" Relationship="JunAndChihiroModel.FK_Folder_CoreTableInfo" FromRole="CoreTableInfo" ToRole="Folder" />
+          <NavigationProperty Name="File" Relationship="JunAndChihiroModel.FK_Picture_CoreTableInfo" FromRole="CoreTableInfo" ToRole="File" />
+          <NavigationProperty Name="User" Relationship="JunAndChihiroModel.FK_User_CoreTableInfo" FromRole="CoreTableInfo" ToRole="User" />
+        </EntityType>
+        <EntityType Name="File">
+          <Key>
+            <PropertyRef Name="FileOid" />
+          </Key>
+          <Property Name="FileOid" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FileName" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="CoreTableInfo" Relationship="JunAndChihiroModel.FK_Picture_CoreTableInfo" FromRole="File" ToRole="CoreTableInfo" />
+        </EntityType>
+        <EntityType Name="Folder">
+          <Key>
+            <PropertyRef Name="FolderOid" />
+          </Key>
+          <Property Name="FolderOid" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CoreTableInfo" Relationship="JunAndChihiroModel.FK_Folder_CoreTableInfo" FromRole="Folder" ToRole="CoreTableInfo" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserOid" />
+          </Key>
+          <Property Name="UserOid" Type="Guid" Nullable="false" />
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CoreTableInfo" Relationship="JunAndChihiroModel.FK_User_CoreTableInfo" FromRole="User" ToRole="CoreTableInfo" />
+        </EntityType>
+        <EntityType Name="JFile">
+          <Key>
+            <PropertyRef Name="FileOid" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="FileName" />
+            <PropertyRef Name="CreatedOid" />
+            <PropertyRef Name="CreatedDate" />
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="FirstName" />
+            <PropertyRef Name="LastName" />
+          </Key>
+          <Property Name="FileOid" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FileName" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="CreatedOid" Type="Guid" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedOid" Type="Guid" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FolderPath" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="FolderOid" Type="Guid" />
+        </EntityType>
+        <EntityType Name="JFolder">
+          <Key>
+            <PropertyRef Name="FolderOid" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="CreatedOid" />
+            <PropertyRef Name="CreatedDate" />
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="FirstName" />
+            <PropertyRef Name="LastName" />
+          </Key>
+          <Property Name="FolderOid" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOid" Type="Guid" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedOid" Type="Guid" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RootFolderPath" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="RootFolderOid" Type="Guid" />
+        </EntityType>
+        <EntityType Name="JTableInfo">
+          <Key>
+            <PropertyRef Name="Oid" />
+            <PropertyRef Name="CreatedOid" />
+            <PropertyRef Name="CreatedDate" />
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="FirstName" />
+            <PropertyRef Name="LastName" />
+          </Key>
+          <Property Name="Oid" Type="Guid" Nullable="false" />
+          <Property Name="CreatedOid" Type="Guid" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedOid" Type="Guid" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="JUser">
+          <Key>
+            <PropertyRef Name="UserOid" />
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Password" />
+            <PropertyRef Name="FirstName" />
+            <PropertyRef Name="LastName" />
+            <PropertyRef Name="CreatedOid" />
+            <PropertyRef Name="CreatedDate" />
+          </Key>
+          <Property Name="UserOid" Type="Guid" Nullable="false" />
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOid" Type="Guid" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedOid" Type="Guid" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="XFolderHierarchy">
+          <Key>
+            <PropertyRef Name="OidOrigin" />
+            <PropertyRef Name="OidDestination" />
+          </Key>
+          <Property Name="OidOrigin" Type="Guid" Nullable="false" />
+          <Property Name="OidDestination" Type="Guid" Nullable="false" />
+        </EntityType>
+        <EntityType Name="XOwnFile">
+          <Key>
+            <PropertyRef Name="OidOrigin" />
+            <PropertyRef Name="OidDestination" />
+          </Key>
+          <Property Name="OidOrigin" Type="Guid" Nullable="false" />
+          <Property Name="OidDestination" Type="Guid" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Folder_CoreTableInfo">
+          <End Type="JunAndChihiroModel.CoreTableInfo" Role="CoreTableInfo" Multiplicity="1" />
+          <End Type="JunAndChihiroModel.Folder" Role="Folder" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CoreTableInfo">
+              <PropertyRef Name="Oid" />
+            </Principal>
+            <Dependent Role="Folder">
+              <PropertyRef Name="FolderOid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Picture_CoreTableInfo">
+          <End Type="JunAndChihiroModel.CoreTableInfo" Role="CoreTableInfo" Multiplicity="1" />
+          <End Type="JunAndChihiroModel.File" Role="File" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CoreTableInfo">
+              <PropertyRef Name="Oid" />
+            </Principal>
+            <Dependent Role="File">
+              <PropertyRef Name="FileOid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_CoreTableInfo">
+          <End Type="JunAndChihiroModel.CoreTableInfo" Role="CoreTableInfo" Multiplicity="1" />
+          <End Type="JunAndChihiroModel.User" Role="User" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CoreTableInfo">
+              <PropertyRef Name="Oid" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="UserOid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="JunAndChihiroModelStoreContainer" CdmEntityContainer="JunAndChihiroEntities">
+          <EntitySetMapping Name="CoreRelationInfoes">
+            <EntityTypeMapping TypeName="JunAndChihiroModel.CoreRelationInfo">
+              <MappingFragment StoreEntitySet="CoreRelationInfo">
+                <ScalarProperty Name="OidDestination" ColumnName="OidDestination" />
+                <ScalarProperty Name="OidOrigin" ColumnName="OidOrigin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CoreTableInfoes">
+            <EntityTypeMapping TypeName="JunAndChihiroModel.CoreTableInfo">
+              <MappingFragment StoreEntitySet="CoreTableInfo">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedOid" ColumnName="UpdatedOid" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedOid" ColumnName="CreatedOid" />
+                <ScalarProperty Name="Oid" ColumnName="Oid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Files">
+            <EntityTypeMapping TypeName="JunAndChihiroModel.File">
+              <MappingFragment StoreEntitySet="File">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="FileOid" ColumnName="FileOid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Folders">
+            <EntityTypeMapping TypeName="JunAndChihiroModel.Folder">
+              <MappingFragment StoreEntitySet="Folder">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="FolderOid" ColumnName="FolderOid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="JunAndChihiroModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserOid" ColumnName="UserOid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JFiles">
+            <EntityTypeMapping TypeName="JunAndChihiroModel.JFile">
+              <MappingFragment StoreEntitySet="JFile">
+                <ScalarProperty Name="FolderOid" ColumnName="FolderOid" />
+                <ScalarProperty Name="FolderPath" ColumnName="FolderPath" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedOid" ColumnName="UpdatedOid" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedOid" ColumnName="CreatedOid" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="FileOid" ColumnName="FileOid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JFolders">
+            <EntityTypeMapping TypeName="JunAndChihiroModel.JFolder">
+              <MappingFragment StoreEntitySet="JFolder">
+                <ScalarProperty Name="RootFolderOid" ColumnName="RootFolderOid" />
+                <ScalarProperty Name="RootFolderPath" ColumnName="RootFolderPath" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedOid" ColumnName="UpdatedOid" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedOid" ColumnName="CreatedOid" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="FolderOid" ColumnName="FolderOid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JTableInfoes">
+            <EntityTypeMapping TypeName="JunAndChihiroModel.JTableInfo">
+              <MappingFragment StoreEntitySet="JTableInfo">
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedOid" ColumnName="UpdatedOid" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedOid" ColumnName="CreatedOid" />
+                <ScalarProperty Name="Oid" ColumnName="Oid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JUsers">
+            <EntityTypeMapping TypeName="JunAndChihiroModel.JUser">
+              <MappingFragment StoreEntitySet="JUser">
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedOid" ColumnName="UpdatedOid" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedOid" ColumnName="CreatedOid" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserOid" ColumnName="UserOid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="XFolderHierarchies">
+            <EntityTypeMapping TypeName="JunAndChihiroModel.XFolderHierarchy">
+              <MappingFragment StoreEntitySet="XFolderHierarchy">
+                <ScalarProperty Name="OidDestination" ColumnName="OidDestination" />
+                <ScalarProperty Name="OidOrigin" ColumnName="OidOrigin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="XOwnFiles">
+            <EntityTypeMapping TypeName="JunAndChihiroModel.XOwnFile">
+              <MappingFragment StoreEntitySet="XOwnFile">
+                <ScalarProperty Name="OidDestination" ColumnName="OidDestination" />
+                <ScalarProperty Name="OidOrigin" ColumnName="OidOrigin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

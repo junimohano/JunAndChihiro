@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:JunAndChihiro.ViewModels;assembly=JunAndChihiro"
+             xmlns:abstractions="clr-namespace:CrossVideoPlayer.FormsPlugin.Abstractions;assembly=JunAndChihiro"
+             x:Class="JunAndChihiro.Views.FileDetailPage">
+
+  <ContentPage.BindingContext>
+    <viewModels:FileDetailPageViewModel/>
+  </ContentPage.BindingContext>
+
+
+  <ScrollView>
+    <StackLayout>
+      <StackLayout.Padding>
+        <OnPlatform x:TypeArguments="Thickness" iOS="0,20,0,0" Android="0,0,0,0" />
+      </StackLayout.Padding>
+
+      <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"/>
+
+      <!--<Label Text="File Name" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" StyleClass="Inverse" />-->
+      <Label Text="{Binding JFile.FileName}" VerticalOptions="Center" HorizontalOptions="CenterAndExpand"  HorizontalTextAlignment="Center" StyleClass="Inverse" />
+
+      <Image Source="{Binding JFile.FilePath}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" IsVisible="{Binding IsImage}" />
+      <WebView Source="{Binding JFile.FilePath}" VerticalOptions="Center" HorizontalOptions="FillAndExpand" HeightRequest="300" IsVisible="{Binding IsGif}" />
+      <abstractions:CrossVideoPlayerView VerticalOptions="Center" VideoScale="1.77" VideoSource="{Binding JFile.FilePath}" HorizontalOptions="CenterAndExpand" IsVisible="{Binding IsVideo}" />
+
+      <Label Text="Name" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" StyleClass="Inverse" />
+      <Entry Text="{Binding JFile.Name, Mode=TwoWay}" VerticalOptions="Center" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" />
+
+      <Label Text="Description" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" StyleClass="Inverse" />
+      <Entry Text="{Binding JFile.Description, Mode=TwoWay}" VerticalOptions="Center" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" />
+
+      <Label Text="Date" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" StyleClass="Inverse" />
+      <DatePicker Date="{Binding JFile.Date, Mode=TwoWay}" VerticalOptions="Center" HorizontalOptions="Center" />
+
+      <Button Text="Save" Command="{Binding SaveCommand}" IsEnabled="{Binding IsNotBusy}" HorizontalOptions="FillAndExpand" StyleClass="Warning" />
+
+    </StackLayout>
+  </ScrollView>
+
+</ContentPage>
